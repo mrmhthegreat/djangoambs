@@ -1,52 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "_base.html" %} {% block content %}
+<section
+  class="quote-form z-[5] relative p-8 container mx-auto rounded-lg bg-bg2 container"
+>
+  <h1>My First Bootstrap Page</h1>
+  <form
+    action="{% url 'import_data' %}"
+    enctype="multipart/form-data"
+    method="POST"
+    class="max-w-sm mx-auto"
+  >
+    {%csrf_token%}
+    <div class="grid gap-6 md:grid-cols-1 mq825:grid-cols-1 mq450:grid-cols-1">
+       
+    <label
+      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      for="file_input"
+      >Upload file</label
+    >
+    <input
+      class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+      id="file_input"
+      ame="file_path"
+      type="file"
+    />
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Automate The Boring Stuff</title>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <label
+      for="model_name"
+      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      >Select Database Table</label
+    >
+    <select
+      id="model_name"
+      name="model_name"
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+    >
+      <option selected disabled>Select</option>
+      {%for model in all_models %}
+      <option value="{{model}}">{{model}}</option>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+      {%endfor%}
+    </select>
+    <button
+      type="submit"
+      class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+    >
+      Import
+    </button>
+  </div>
 
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
-
-<body>
-
-
-    <div class="container">
-        <h1>My First Bootstrap Page</h1>
-        <form action="{% url 'import_data' %}" enctype="multipart/form-data" method="POST"
-            style="max-width: 600px;margin-top: auto;padding-top: 10pc;">
-
-            {%csrf_token%}
-            <div class="form-group">
-                <label for="file_path">Upload Csv File</label>
-                <input type="file" name="file_path" class="form-control">
-
-
-            </div>
-            <div class="form-group">
-                <label for="model_name">Select Database Table</label>
-                <select name="model_name" class="form-control">
-
-                    <option value="" disabled selected>Select</option>
-                    {%for model in all_models %}
-                    <option value="{{model}}">{{model}}</option>
-
-                    {%endfor%}
-                </select>
+  </form>
+</section>
 
 
-            </div>
-            <input type="submit" value="Import Data" class="btn btn-primary">
-        </form>
-    </div>
-
-
-</body>
-
-</html>
+{% endblock content %}

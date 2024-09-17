@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 
 from dataentery.utils import get_all_custom_model
-from upload.models import Upload
+from upload.models import Uploads
 
 from django.core.management import call_command
 
@@ -12,7 +12,7 @@ def import_data(request):
     if request.method=='POST':
         file_path=request.FILES.get('file_path')
         model_name=request.POST.get('model_name')
-        upload=Upload.objects.create(file=file_path,model_name=model_name)
+        upload=Uploads.objects.create(file=file_path,model_name=model_name)
         try:
             call_command('importdata',upload.full_path(),model_name)
         except Exception as e:
